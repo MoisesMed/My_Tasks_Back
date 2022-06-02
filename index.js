@@ -1,8 +1,9 @@
 require('dotenv').config()
 const mongoose = require('mongoose')
 const express = require('express')
+const taskRoutes = require('./routes/taskRoutes')
 const authRoutes = require('./routes/authRoutes')
-const Middleauth = require('./middlewares/authentication')
+const MiddleAuth = require('./middlewares/authentication')
 const app = express()
 const cors = require('cors')
 
@@ -16,6 +17,7 @@ const User = require('./models/User')
 
 // ROTAS DA API //
 app.use('/auth', authRoutes)
+app.use('/task', taskRoutes)
 
 // TESTANDO A API
 app.get('/', (req, res) => {
@@ -23,7 +25,7 @@ app.get('/', (req, res) => {
 })
 
 // TESTANDO A PRIVATE ROUTE
-app.get("/user/:id", Middleauth, async (req, res) => {
+app.get("/user/:id", MiddleAuth, async (req, res) => {
     const id = req.params.id
 
     const user = await User.findById(id, '-password')
