@@ -45,7 +45,6 @@ router.post("/register", async (req, res) => {
         await user.save()
         res.status(201).json({ msg: "Usuário criado com sucesso!" })
     } catch (err) {
-        console.log(err)
         res.status(500).json({ msg: "Erro no servidor, tente novamente mais tarde" })
     }
 })
@@ -80,7 +79,6 @@ router.post("/login", async (req, res) => {
         }, secret)
         res.status(200).json({ msg: "Autenticação realizada com sucesso", token })
     } catch (err) {
-        console.log(err)
         res.status(500).json({ msg: "Erro no servidor, tente novamente mais tarde" })
     }
 
