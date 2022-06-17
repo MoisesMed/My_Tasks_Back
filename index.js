@@ -37,7 +37,6 @@ app.get("/user/:id", MiddleAuth, async (req, res) => {
 })
 
 // CONEXÃO DO BANCO
-
 const dbUser = process.env.DB_USER
 const dbPassword = process.env.DB_PASS
 
