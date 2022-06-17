@@ -43,8 +43,8 @@ const dbPassword = process.env.DB_PASS
 
 mongoose.connect(`mongodb+srv://${dbUser}:${dbPassword}@kanbancluster.yfz5p.mongodb.net/?retryWrites=true&w=majority`)
     .then(() => {
-        app.listen(3000)
+        app.listen(process.env.PORT || 3000)
         console.log("Deu certo conectar ao banco")
     }).catch((error) => console.log(error))
 
-app.listen(3001)
+app.listen(process.env.PORT || 3001)
