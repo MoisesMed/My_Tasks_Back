@@ -11,8 +11,10 @@ router.post("/create", async (req, res) => {
     return;
   }
 
-  if(Task.find({title : title})){
-    res.status(422).json({ error: "Essa tarefa já existe!" });
+  const taskExist = await Task.findOne({ title: title });
+
+  if (taskExist) {
+    return res.status(422).json({ msg: "Essa tarefa já existe!" });
   }
 
   const task = {
@@ -39,5 +41,52 @@ router.get("/", async (req, res) => {
     res.status(500).json({ error: error });
   }
 });
+
+router.patch("/update/:id", async (req, res) => {
+  const id = req.params.id;
+
+  const { title, status, description, due_date } = req.body;
+
+  if (status !== [1, 2, 3]) {
+    return res.status(422).json({ msg: "Selecione o status da tarefa" });
+  }
+
+  const task = {
+    title,
+    status,
+    description,
+    due_date,
+  };
+
+  try {
+    const updateTask = await Task.updateOne({ _id: id ,id_user:req.user_id}, task);
+
+    if (updateTask.matchedCount === 0) {
+      res.status(422).json({ message: "Tarefa não encontrado" });
+      return;
+    }
+    res.status(200).json({ message: "Tarefa atualizada com sucesso!" });
+  } catch (error) {
+    res.status(500).json({ error: error });
+  }
+});
+
+router.delete('/delete/:id', async (req, res) => {
+  const id = req.params.id
+
+  const deleteTask = await Task.findOne({_id: id,id_user:req.user_id})
+
+  if (!deleteTask) {
+      res.status(422).json({message: "Tarefa não encontrada"})
+      return
+  }
+  try {
+      await Task.deleteOne({_id: id})
+      res.status(200).json({message: "Tarefa removida com sucesso!"})
+  } catch (error) {
+      res.status(500).json({error: error})
+  }
+
+})
 
 module.exports = router;
