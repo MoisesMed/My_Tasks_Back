@@ -47,9 +47,9 @@ router.patch("/update/:id", async (req, res) => {
 
   const { title, status, description, due_date } = req.body;
 
-  // if (status !== [1, 2, 3]) {
-  //   return res.status(422).json({ msg: "Selecione o status da tarefa" });
-  // }
+  if (status > 3 || status < 0) {
+    return res.status(422).json({ msg: "Selecione o status da tarefa" });
+  }
 
   const task = {
     title,
