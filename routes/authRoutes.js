@@ -77,7 +77,6 @@ router.post("/login", async (req, res) => {
 
   try {
     const secret = process.env.SECRET;
-    console.log(secret);
     const token = jwt.sign(
       {
         id: user._id,
