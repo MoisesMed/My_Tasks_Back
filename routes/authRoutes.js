@@ -49,7 +49,7 @@ router.post("/register", async (req, res) => {
   } catch (err) {
     res
       .status(500)
-      .json({ msg: "Erro no servidor, tente novamente mais tarde" });
+      .json({ msg: "Erro no servidor, tente novamente mais tarde." });
   }
 });
 
@@ -83,11 +83,11 @@ router.post("/login", async (req, res) => {
       },
       secret
     );
-    res.status(200).json({ msg: "Autenticação realizada com sucesso", token });
+    res.status(200).json({ msg: "Autenticação realizada com sucesso!", token });
   } catch (err) {
     res
       .status(500)
-      .json({ msg: "Erro no servidor, tente novamente mais tarde" });
+      .json({ msg: "Erro no servidor, tente novamente mais tarde." });
   }
 });
 
